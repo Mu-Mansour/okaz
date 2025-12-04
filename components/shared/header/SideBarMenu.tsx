@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/sheet";
 import Link from "next/link";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import UserButton from "./UserButton";
 
 const SideBarMenu = () => {
   return (
@@ -21,11 +22,7 @@ const SideBarMenu = () => {
               <ShoppingCart /> Cart
             </Link>
           </Button>
-          <Button asChild>
-            <Link href={"/signIn"}>
-              <UserIcon /> Sign IN
-            </Link>
-          </Button>
+          <UserButton />
         </nav>
         <nav className='md:hidden'>
           <Sheet>
@@ -41,12 +38,7 @@ const SideBarMenu = () => {
                   Cart
                 </Link>
               </Button>
-              <Button asChild>
-                <Link href='/signIn'>
-                  <UserIcon />
-                  Sign In
-                </Link>
-              </Button>
+              <UserButton />
             </SheetContent>
             <SheetDescription></SheetDescription>
           </Sheet>
