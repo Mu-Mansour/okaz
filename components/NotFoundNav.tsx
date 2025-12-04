@@ -2,7 +2,7 @@
 import { APP_NAME } from "@/lib/constants";
 import Image from "next/image";
 import AppIcon from "@/app/favicon.ico";
-import { Button } from "@/components/ui/button";
+import { Button } from "../components/ui/button";
 import { useRouter } from "next/navigation";
 export const NotFoundNav = () => {
   const router = useRouter();
