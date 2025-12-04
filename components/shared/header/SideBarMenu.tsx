@@ -22,7 +22,7 @@ const SideBarMenu = () => {
             </Link>
           </Button>
           <Button asChild>
-            <Link href={"/sign-In"}>
+            <Link href={"/signIn"}>
               <UserIcon /> Sign IN
             </Link>
           </Button>
@@ -42,7 +42,7 @@ const SideBarMenu = () => {
                 </Link>
               </Button>
               <Button asChild>
-                <Link href='/sign-in'>
+                <Link href='/signIn'>
                   <UserIcon />
                   Sign In
                 </Link>

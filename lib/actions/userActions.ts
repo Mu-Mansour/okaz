@@ -1,3 +1,4 @@
+"use server";
 import { signIn, signOut } from "@/auth";
 import { signInFormSchema } from "../validator";
 import { isRedirectError } from "next/dist/client/components/redirect-error";

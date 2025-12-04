@@ -1,11 +1,11 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth from "next-auth";
-import type { AuthOptions } from "next-auth";
+import type { NextAuthConfig } from "next-auth";
 import { prisma } from "./db/prisma";
 import { compareSync } from "bcrypt-ts";
 
-export const config: AuthOptions = {
+export const config: NextAuthConfig = {
   pages: {
     signIn: "/sign-in",
     error: "/sign-in",
