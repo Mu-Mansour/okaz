@@ -4,6 +4,7 @@ import { signInFormSchema, signUpFormSchema } from "../validator";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { hashSync } from "bcrypt-ts";
 import { prisma } from "@/db/prisma";
+import { formatError } from "../utils";
 export async function signInWithCredentials(
   prevState: unknown,
   formData: FormData
@@ -62,7 +63,7 @@ export async function signUp(prevState: unknown, formData: FormData) {
 
     return {
       success: false,
-      message: "Something went wrong",
+      message: formatError(error),
     };
   }
 }
