@@ -20,7 +20,9 @@ const CredentialsSignInForm = () => {
       <input type='hidden' name='callbackUrl' value={callbackUrl} />
       <div className='space-y-6'>
         <div>
-          <Label htmlFor='email'>Email</Label>
+          <Label className='mb-1' htmlFor='email'>
+            Email
+          </Label>
           <Input
             id='email'
             name='email'
@@ -31,7 +33,9 @@ const CredentialsSignInForm = () => {
           />
         </div>
         <div>
-          <Label htmlFor='password'>Password</Label>
+          <Label className='mb-1' htmlFor='password'>
+            Password
+          </Label>
           <Input
             id='password'
             name='password'

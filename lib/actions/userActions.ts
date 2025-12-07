@@ -5,6 +5,7 @@ import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { hashSync } from "bcrypt-ts";
 import { prisma } from "@/db/prisma";
 import { formatError } from "../utils";
+import z from "zod";
 export async function signInWithCredentials(
   prevState: unknown,
   formData: FormData
@@ -29,29 +30,25 @@ export async function signInWithCredentials(
 export async function signOutUser() {
   await signOut();
 }
-export async function signUp(prevState: unknown, formData: FormData) {
+export async function signUp(
+  prevState: unknown,
+  formData: z.infer<typeof signUpFormSchema>
+) {
   try {
-    const user = signUpFormSchema.parse({
-      name: formData.get("name"),
-      email: formData.get("email"),
-      confirmPassword: formData.get("confirmPassword"),
-      password: formData.get("password"),
-    });
+    const plainPassword = formData.password;
 
-    const plainPassword = user.password;
-
-    user.password = hashSync(user.password, 10);
+    formData.password = hashSync(formData.password, 10);
 
     await prisma.user.create({
       data: {
-        name: user.name,
-        email: user.email,
-        password: user.password,
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
       },
     });
 
     await signIn("credentials", {
-      email: user.email,
+      email: formData.email,
       password: plainPassword,
     });
 

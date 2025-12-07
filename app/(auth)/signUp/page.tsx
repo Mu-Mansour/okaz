@@ -35,7 +35,7 @@ const SignUp = async (props: {
 
   return (
     <div className='w-full h-full max-w-md mx-auto '>
-      <Card className='p-2'>
+      <Card className='p-2 m-4'>
         <CardHeader className='space-y-4 '>
           <Link href='/' className='flex-center'>
             <Image
@@ -51,7 +51,7 @@ const SignUp = async (props: {
             Enter your information below to create your account
           </CardDescription>
         </CardHeader>
-        <CardContent className='space-y-4'>{<SignUpForm />}</CardContent>
+        <CardContent className='space-y-2'>{<SignUpForm />}</CardContent>
       </Card>
     </div>
   );
