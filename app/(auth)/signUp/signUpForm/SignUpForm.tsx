@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { signUp } from "@/lib/actions/userActions";
 import { signUpFormSchema } from "@/lib/validator";
+import { SignUpFormData } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -29,9 +30,8 @@ const SignUpForm = () => {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof signUpFormSchema>) => {
+  const onSubmit = async (values: SignUpFormData) => {
     const result = await signUp(null, values);
-
     if (!result.success) {
       setError("root", { message: result.message });
     }
@@ -39,7 +39,6 @@ const SignUpForm = () => {
 
   return (
     <form noValidate onSubmit={handleSubmit(onSubmit)}>
-      <input type='hidden' name='callbackUrl' value={callbackUrl} />
       <div className='space-y-6'>
         <div>
           <Label className='mb-1' htmlFor='name'>
@@ -69,7 +68,7 @@ const SignUpForm = () => {
           </Label>
           <Input id='password' type='password' {...register("password")} />
           {errors.password && (
-            <p className='text-sm text-destructive mt-1'>
+            <p className='text-sm text-destructive'>
               {errors.password.message}
             </p>
           )}
@@ -84,7 +83,7 @@ const SignUpForm = () => {
             {...register("confirmPassword")}
           />
           {errors.confirmPassword && (
-            <p className='text-sm text-destructive mt-1'>
+            <p className='text-sm text-destructive'>
               {errors.confirmPassword.message}
             </p>
           )}
