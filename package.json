@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "postinstall": "prisma generate",
-    "generate": "npx prisma generate"
+    "generate": "npx prisma generate",
+    "runStudio": "npx prisma studio"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.1",
@@ -31,6 +32,7 @@
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "react-hook-form": "^7.68.0",
+    "sonner": "^2.0.7",
     "tailwind-merge": "^3.4.0",
     "ws": "^8.18.3",
     "zod": "^4.1.13"
