@@ -1,11 +1,11 @@
 "use server";
 import { signIn, signOut } from "@/auth";
-import { signInFormSchema, signUpFormSchema } from "../validator";
-import { isRedirectError } from "next/dist/client/components/redirect-error";
-import { hashSync } from "bcrypt-ts";
 import { prisma } from "@/db/prisma";
+import { SignUpFormData } from "@/types";
+import { hashSync } from "bcrypt-ts";
+import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { formatError } from "../utils";
-import z from "zod";
+import { signInFormSchema } from "../validator";
 export async function signInWithCredentials(
   prevState: unknown,
   formData: FormData
@@ -30,10 +30,7 @@ export async function signInWithCredentials(
 export async function signOutUser() {
   await signOut();
 }
-export async function signUp(
-  prevState: unknown,
-  formData: z.infer<typeof signUpFormSchema>
-) {
+export async function signUp(prevState: unknown, formData: SignUpFormData) {
   try {
     const plainPassword = formData.password;
 
