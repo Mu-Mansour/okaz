@@ -1,22 +1,16 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth from "next-auth";
-import type { NextAuthConfig } from "next-auth";
 import { prisma } from "./db/prisma";
 import { compareSync } from "bcrypt-ts";
+import { authConfig } from "./auth.config";
 
-export const config: NextAuthConfig = {
-  pages: {
-    signIn: "/sign-in",
-    error: "/sign-in",
-  },
-  session: {
-    strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, // 30 days for it
-  },
+export const config = {
+  ...authConfig,
   adapter: PrismaAdapter(prisma),
   callbacks: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ...authConfig.callbacks,
     async session({ session, user, trigger, token }: any) {
       session.user.id = token.sub;
       if (trigger === "update") {
@@ -26,7 +20,6 @@ export const config: NextAuthConfig = {
       }
       return session;
     },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async jwt({ token, user, trigger, session }: any) {
       // Assign user fields to token
       if (user) {
