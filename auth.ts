@@ -5,6 +5,7 @@ import NextAuth from "next-auth";
 import { prisma } from "./db/prisma";
 import { compareSync } from "bcrypt-ts";
 import { authConfig } from "./auth.config";
+import { cookies } from "next/headers";
 
 export const config = {
   ...authConfig,
@@ -21,25 +22,34 @@ export const config = {
       return session;
     },
     async jwt({ token, user, trigger, session }: any) {
-      // Assign user fields to token
       if (user) {
+        // Assign user properties to the token
+        token.id = user.id;
         token.role = user.role;
 
-        // If user has no name, use email as their default name
-        if (user.name === "NO_NAME") {
-          token.name = user.email!.split("@")[0];
+        if (trigger === "sign-in" || trigger === "sign-up") {
+          const cookiesObject = await cookies();
+          const sessionCartId = cookiesObject.get("sessionCartId")?.value;
 
-          // Update the user in the database with the new name
-          await prisma.user.update({
-            where: { id: user.id },
-            data: { name: token.name },
-          });
+          if (sessionCartId) {
+            const sessionCart = await prisma.cart.findFirst({
+              where: { sessionCartId },
+            });
+
+            if (sessionCart) {
+              // Overwrite any existing user cart
+              await prisma.cart.deleteMany({
+                where: { userId: user.id },
+              });
+
+              // Assign the guest cart to the logged-in user
+              await prisma.cart.update({
+                where: { id: sessionCart.id },
+                data: { userId: user.id },
+              });
+            }
+          }
         }
-      }
-
-      // Handle session updates (e.g., name change)
-      if (session?.user.name && trigger === "update") {
-        token.name = session.user.name;
       }
 
       return token;
