@@ -11,6 +11,7 @@ import {
   signInFormSchema,
 } from "../validator";
 import z from "zod";
+import { revalidatePath } from "next/cache";
 export async function signInWithCredentials(
   prevState: unknown,
   formData: FormData
@@ -34,6 +35,7 @@ export async function signInWithCredentials(
 }
 export async function signOutUser() {
   await signOut();
+  revalidatePath("/cart");
 }
 export async function signUp(prevState: unknown, formData: SignUpFormData) {
   try {

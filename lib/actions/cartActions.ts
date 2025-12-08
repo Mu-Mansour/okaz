@@ -166,10 +166,66 @@ export async function getMyCart() {
   const userId = session?.user?.id;
 
   // Get user cart from database
-  const cart = await prisma.cart.findFirst({
-    where: userId ? { userId: userId } : { sessionCartId: sessionCartId },
-  });
+  if (userId) {
+    const sessionCart = await prisma.cart.findFirst({
+      where: { sessionCartId, userId: null },
+    });
+    if (sessionCart) {
+      const userCart = await prisma.cart.findFirst({
+        where: { userId },
+      });
+      if (userCart) {
+        const userCartItems = userCart.items as CartItem[];
+        const sessionCartItems = sessionCart.items as CartItem[];
 
+        sessionCartItems.forEach((sessionItem) => {
+          const userItem = userCartItems.find(
+            (item) => item.productId === sessionItem.productId
+          );
+          if (userItem) {
+            userItem.qty += sessionItem.qty;
+          } else {
+            userCartItems.push(sessionItem);
+          }
+        });
+
+        await prisma.cart.deleteMany({
+          where: { id: sessionCart.id },
+        });
+
+        await prisma.cart.update({
+          where: { id: userCart.id },
+          data: {
+            items: userCartItems as Prisma.CartUpdateitemsInput[],
+            ...calcPrice(userCartItems),
+          },
+        });
+      } else {
+        // Use transaction: delete first, then create to avoid sessionCartId unique constraint
+        await prisma.$transaction(async (tx) => {
+          await tx.cart.deleteMany({
+            where: { id: sessionCart.id },
+          });
+          await tx.cart.create({
+            data: {
+              userId,
+              sessionCartId,
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              items: sessionCart.items as any,
+              ...calcPrice(sessionCart.items as CartItem[]),
+            },
+          });
+        });
+      }
+    }
+  }
+
+  // Get user cart from database
+  const cart = await prisma.cart.findFirst({
+    where: userId
+      ? { userId: userId }
+      : { sessionCartId: sessionCartId, userId: null },
+  });
   if (!cart) return undefined;
 
   // Convert Decimal values to strings
