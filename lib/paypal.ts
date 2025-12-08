@@ -63,9 +63,11 @@ export async function generateAccessToken() {
     throw new Error(errorMessage);
   }
 }
-function handleResponse(response: Response) {
+async function handleResponse(response: Response) {
   if (!response.ok) {
-    throw new Error("Failed to fetch data");
+    const errorMessage = await response.text();
+    console.error("PayPal API Error:", errorMessage);
+    throw new Error(errorMessage);
   }
   return response.json();
 }
