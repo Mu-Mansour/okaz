@@ -21,7 +21,7 @@ export const config = {
       }
       return session;
     },
-    async jwt({ token, user, trigger, session }: any) {
+    async jwt({ token, user, trigger }: any) {
       if (user) {
         // Assign user properties to the token
         token.id = user.id;

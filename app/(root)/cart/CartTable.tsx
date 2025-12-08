@@ -11,9 +11,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { addItemToCart, removeItemFromCart } from "@/lib/actions/cartActions";
-import { formatCurrency, round2 } from "@/lib/utils";
+import { formatCurrency } from "@/lib/utils";
 import { Cart } from "@/types";
-import { ArrowRight, Loader, Minus, Plus } from "lucide-react";
+import { ArrowRight, Loader, Minus, Plus, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -131,8 +131,24 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
       </Card>
     </div>
   ) : (
-    <div>
-      Cart is empty. <Link href='/'>Go shopping</Link>
+    <div className='flex h-full min-h-[500px] flex-col items-center justify-center gap-6 p-4 text-center'>
+      <div className='flex h-20 w-20 items-center justify-center rounded-full bg-muted'>
+        <ShoppingCart className='h-10 w-10 text-muted-foreground' />
+      </div>
+      <div className='space-y-2'>
+        <h2 className='text-2xl font-bold tracking-tight'>
+          Your cart is empty
+        </h2>
+        <p className='text-muted-foreground max-w-sm mx-auto'>
+          Start adding items to your cart and they will appear here.
+        </p>
+      </div>
+      <Button asChild size='lg' className='rounded-full font-semibold'>
+        <Link href='/'>
+          Start Shopping
+          <ArrowRight className='ml-2 h-4 w-4' />
+        </Link>
+      </Button>
     </div>
   );
 };

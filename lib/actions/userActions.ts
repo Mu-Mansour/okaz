@@ -5,7 +5,12 @@ import { ShippingAddress, SignUpFormData } from "@/types";
 import { hashSync } from "bcrypt-ts";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { formatError } from "../utils";
-import { shippingAddressSchema, signInFormSchema } from "../validator";
+import {
+  paymentMethodSchema,
+  shippingAddressSchema,
+  signInFormSchema,
+} from "../validator";
+import z from "zod";
 export async function signInWithCredentials(
   prevState: unknown,
   formData: FormData
@@ -90,6 +95,36 @@ export async function updateUserAddress(data: ShippingAddress) {
     await prisma.user.update({
       where: { id: currentUser.id },
       data: { address },
+    });
+
+    return {
+      success: true,
+      message: "User updated successfully",
+    };
+  } catch (error) {
+    return { success: false, message: formatError(error) };
+  }
+}
+
+export async function updateUserPaymentMethod(
+  data: z.infer<typeof paymentMethodSchema>
+) {
+  try {
+    const session = await auth();
+    if (!session?.user?.id) {
+      throw new Error("User not found");
+    }
+
+    const currentUser = await prisma.user.findFirst({
+      where: { id: session.user.id },
+    });
+    if (!currentUser) throw new Error("User not found");
+
+    const paymentMethod = paymentMethodSchema.parse(data);
+
+    await prisma.user.update({
+      where: { id: currentUser.id },
+      data: { paymentMethod: paymentMethod.type },
     });
 
     return {
