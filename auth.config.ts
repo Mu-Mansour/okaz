@@ -48,6 +48,7 @@ export const authConfig = {
         response.cookies.set("sessionCartId", sessionCartId);
 
         // return the response with the sessionCartId set
+
         return response;
       } else {
         return true;
