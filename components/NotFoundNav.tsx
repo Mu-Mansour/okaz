@@ -1,7 +1,6 @@
 "use client";
 import { APP_NAME } from "@/lib/constants";
 import Image from "next/image";
-import AppIcon from "@/app/favicon.ico";
 import { Button } from "../components/ui/button";
 import { useRouter } from "next/navigation";
 export const NotFoundNav = () => {
@@ -10,7 +9,7 @@ export const NotFoundNav = () => {
     <div className='flex flex-col items-center justify-center min-h-screen '>
       <Image
         priority={true}
-        src={AppIcon}
+        src='/favicon.ico'
         width={48}
         height={48}
         alt={`${APP_NAME} logo`}

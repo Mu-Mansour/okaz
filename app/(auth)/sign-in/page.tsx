@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import favicon from "../../favicon.ico";
 import { redirect } from "next/navigation";
 
 import {
@@ -37,7 +36,7 @@ const SignInPage = async (props: {
           <Link href='/' className='flex-center'>
             <Image
               priority={true}
-              src={favicon}
+              src='/favicon.ico'
               width={100}
               height={100}
               alt={`${APP_NAME} logo`}
