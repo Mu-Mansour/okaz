@@ -1,11 +1,12 @@
 import { requireAdmin } from "@/lib/auth-guard";
+import ProductForm from "./createProductForm/ProductForm";
 
 const AdminCreateProductPage = async () => {
   await requireAdmin();
 
   return (
     <div>
-      <h1 className='h2-bold'>Create Product</h1>
+      <ProductForm type='Create' />
     </div>
   );
 };

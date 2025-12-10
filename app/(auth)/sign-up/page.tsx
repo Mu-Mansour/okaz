@@ -12,7 +12,6 @@ import { APP_NAME } from "@/lib/constants";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import SignUpForm from "./signUpForm/SignUpForm";
-import favicon from "../../favicon.ico";
 
 export const metadata: Metadata = {
   title: "Sign Up",
