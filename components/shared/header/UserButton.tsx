@@ -18,7 +18,6 @@ const UserButton = async () => {
         <Button>Sign In</Button>
       </Link>
     );
-  console.log("session", session);
   const firstInitial = session.user?.name?.charAt(0).toUpperCase() ?? "";
 
   return (
@@ -50,11 +49,14 @@ const UserButton = async () => {
               User Profile
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Link className='w-full' href='/user/orders'>
-              Order History
-            </Link>
-          </DropdownMenuItem>
+
+          {session?.user?.role === "user" && (
+            <DropdownMenuItem>
+              <Link className='w-full' href='/user/orders'>
+                Order History
+              </Link>
+            </DropdownMenuItem>
+          )}
           {session?.user?.role === "admin" && (
             <DropdownMenuItem>
               <Link className='w-full' href='/admin/overview'>

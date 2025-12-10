@@ -33,6 +33,12 @@ export async function getAllProducts({
   category?: string;
 }) {
   const data = await prisma.product.findMany({
+    where: {
+      OR: [
+        { name: { contains: query, mode: "insensitive" } },
+        { description: { contains: query, mode: "insensitive" } },
+      ],
+    },
     skip: (page - 1) * limit,
     take: limit,
   });
