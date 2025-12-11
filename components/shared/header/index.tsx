@@ -2,13 +2,16 @@ import { APP_NAME } from "@/lib/constants";
 import Image from "next/image";
 import Link from "next/link";
 import SideBarMenu from "./SideBarMenu";
+import CategoriesDrawer from "./CategoriesDrawer";
+import Search from "./search";
 
 const Header = () => {
   return (
     <header className='w-full border-b'>
       <div className=' wrapper flex-between'>
         <div className='flex-start'>
-          <Link href={"/"} className='flex-start'>
+          <CategoriesDrawer />
+          <Link href={"/"} className='flex-start ml-4'>
             <Image
               src='/favicon.ico'
               alt={`${APP_NAME} logo`}
@@ -21,6 +24,8 @@ const Header = () => {
             </span>
           </Link>
         </div>
+        <Search />
+
         <SideBarMenu />
       </div>
     </header>

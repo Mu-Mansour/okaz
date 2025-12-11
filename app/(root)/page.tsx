@@ -1,5 +1,10 @@
+import { ProductCarousel } from "@/components/shared/product/ProductCarousel";
 import ProductList from "@/components/shared/product/ProductList";
-import { getLatestProducts } from "@/lib/actions/productActions";
+import ViewAllProductsButton from "@/components/ViewAllProductsButton";
+import {
+  getFeaturedProducts,
+  getLatestProducts,
+} from "@/lib/actions/productActions";
 export const revalidate = 10;
 export const metadata = {
   title: "Home",
@@ -12,10 +17,20 @@ export default async function Home() {
       rating: Number(product.rating),
     };
   });
+  const featuredProducts = await getFeaturedProducts();
+
   return (
     <div className='space-y-8'>
-      <h2 className='h2-bold'>Latest Products</h2>
+      {featuredProducts.length > 0 && (
+        <ProductCarousel
+          data={products.map((p) => ({
+            ...p,
+            rating: Number(p.rating),
+          }))}
+        />
+      )}
       <ProductList title='Newest Arrivals' data={products} limit={6} />
+      <ViewAllProductsButton />
     </div>
   );
 }
