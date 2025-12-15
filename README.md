@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Application Overview
 
-## Getting Started
+This document outlines the core features and technologies used in the **Okaz** e-commerce application.
 
-First, run the development server:
+## Core Technologies
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+The application is built using a modern, robust tech stack designed for performance, scalability, and developer experience.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Framework & Language
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **[Next.js 16](https://nextjs.org/)**: React framework with App Router for server-side rendering, routing, and API handling.
+- **[TypeScript](https://www.typescriptlang.org/)**: Typesafe JavaScript for better code quality and developer tooling.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Styling & UI
 
-## Learn More
+- **[Tailwind CSS (v4)](https://tailwindcss.com/)**: Utility-first CSS framework for rapid UI development.
+- **[shadcn/ui](https://ui.shadcn.com/)**: Reusable UI components built on **[Radix UI](https://www.radix-ui.com/)** primitives (Dialog, Select, Dropdown, etc.).
+- **[Lucide React](https://lucide.dev/)**: Beautiful, consistent icons.
 
-To learn more about Next.js, take a look at the following resources:
+### Database & ORM
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **[PostgreSQL](https://www.postgresql.org/)**: Robust relational database.
+- **[Prisma](https://www.prisma.io/)**: Next-generation Node.js and TypeScript ORM for database modeling and type-safe queries.
+- **[Neon](https://neon.tech/)** (Optional): Serverless Postgres driver compatibility.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Authentication & Security
 
-## Deploy on Vercel
+- **[NextAuth.js (v5)](https://authjs.dev/)**: Complete open-source authentication solution.
+- **[Bcrypt-ts](https://github.com/kelektiv/node.bcrypt.js)**: Library for hashing passwords.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### State Management & Forms
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **[React Hook Form](https://react-hook-form.com/)**: Performant, flexible, and extensible forms.
+- **[Zod](https://zod.dev/)**: TypeScript-first schema declaration and validation library.
+
+### Payments
+
+- **[Stripe](https://stripe.com/)**: Integration for credit card processing (`@stripe/stripe-js`, `@stripe/react-stripe-js`).
+- **[PayPal](https://developer.paypal.com/)**: Integration for PayPal payments (`@paypal/react-paypal-js`).
+
+### File Storage & Media
+
+- **[Uploadthing](https://uploadthing.com/)**: Easy file uploading for React applications.
+
+### Email & Communication
+
+- **[Resend](https://resend.com/)**: Email API for developers.
+- **[React Email](https://react.email/)**: Build and send emails using React components.
+
+## Key Application Features
+
+### 🛍️ Customer Experience
+
+- **Product Catalog**: Browse products with filtering, categorization, and search.
+- **Product Details**: Detailed views including images, descriptions, ratings, and stock status.
+- **Shopping Cart**: Persistent cart functionality to add, remove, and update items.
+- **Checkout Flow**: Multi-step checkout process:
+  1.  **Shipping Address**: Manage delivery details.
+  2.  **Payment Method**: Select preferred payment option (Stripe/PayPal/Cash on Delivery).
+  3.  **Place Order**: Review and confirm the order.
+- **User Accounts**: Profile management, order history, and payment method settings.
+- **Reviews & Ratings**: Users can leave verified reviews and ratings for products.
+
+### 🛡️ Admin Dashboard
+
+- **Overview**: Dashboard with key metrics and insights.
+- **Product Management**: Create, read, update, and delete (CRUD) products. Features include image uploads via Uploadthing.
+- **Order Management**: View and update order statuses (e.g., mark as delivered).
+- **User Management**: View and modify user roles and details.
+
+### ⚙️ Backend Features
+
+- **Secure API**: Protected API routes for data access and manipulation.
+- **Webhooks**: Handling external events (e.g., payment confirmations).
+- **Database Seeding**: Tools to populate the database with initial data (`db/seed`).
