@@ -1,5 +1,7 @@
 # Application Overview
 
+**Live App:** [https://okaz-rho.vercel.app/](https://okaz-rho.vercel.app/)
+
 This document outlines the core features and technologies used in the **Okaz** e-commerce application.
 
 ## Core Technologies
