@@ -21,6 +21,7 @@ const ProductCard = ({ product }: { product: Product }) => {
             className='aspect-square object-cover rounded mx-auto'
             height={300}
             width={300}
+            sizes='(max-width: 768px) 100vw, 300px'
           />
         </Link>
       </CardHeader>
