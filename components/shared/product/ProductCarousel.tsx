@@ -32,14 +32,16 @@ export function ProductCarousel({ data }: { data: Product[] }) {
           <CarouselItem key={product.id}>
             <Link href={`/product/${product.slug}`}>
               {product.banner && (
-                <Image
-                  alt={product.name}
-                  src={product.banner}
-                  width='0'
-                  height='0'
-                  sizes='100vw'
-                  className='w-full h-auto max-h-[45vh] max-w-[1200px] object-cover rounded-md'
-                />
+                <div className='relative aspect-[16/6] w-full min-h-[300px]'>
+                  <Image
+                    alt={product.name}
+                    src={product.banner}
+                    fill
+                    sizes='100vw'
+                    className='object-cover rounded-md'
+                    priority
+                  />
+                </div>
               )}
             </Link>
           </CarouselItem>
